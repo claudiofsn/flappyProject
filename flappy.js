@@ -125,6 +125,20 @@ function colidiu(passaro, barreiras) {
 	return colidiu;
 }
 
+function endGame({ timer, score, gameSpace }) {
+	clearInterval(timer)
+	const endGameContainer = newElement("div", "endGameContainer")
+	gameSpace.appendChild(endGameContainer)
+	const endGameInfo = newElement("div", "endGameInfo")
+	endGameContainer.appendChild(endGameInfo)
+
+	const text = newElement("h2", "")
+	text.innerHTML = `Fim da linha, Campeão<br>Você fez ${score} pontos<br>Aperte qualquer tecla para jogar novamente`
+	endGameInfo.appendChild(text);
+
+	window.addEventListener('keydown', event => location.reload());
+}
+
 function FlappyBird() {
 	let pontos = 0;
 
@@ -145,7 +159,7 @@ function FlappyBird() {
 			barreiras.animar();
 			passaro.animar();
 			if (colidiu(passaro, barreiras)) {
-				clearInterval(timer)
+				endGame({ timer: timer, score: pontos, gameSpace: areaJogo })
 			}
 		}, 20)
 	};
